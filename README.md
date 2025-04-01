@@ -9,6 +9,8 @@ This project is a backend service built using FastAPI for managing magazine subs
 3. Create subscriptions for magazines.
 4. Retrieve, modify, and delete their subscriptions.
 
+Review the sample API here: SAMPLE API [SAMPLE API](https://crowdboticsresearch-app-service.azurewebsites.net/docs#/)
+
 ## Features
 
 - User authentication and password management.
