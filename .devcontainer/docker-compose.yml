@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+      args:
+        VARIANT: 3.9
+        USER_UID: 1000
+        USER_GID: 1000
+
+    volumes:
+      - ..:/workspace:cached
+
+    command: >
+      sh -c "pip install --no-cache-dir -r /workspace/src/requirements.txt && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+
+    network_mode: service:db
+
+    environment:
+      DATABASE_URL: postgresql+psycopg2://app_user:app_password@db/app
+
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: app_user
+      POSTGRES_DB: app
+      POSTGRES_PASSWORD: app_password
+
+volumes:
+  postgres-data:

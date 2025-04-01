@@ -1,0 +1,54 @@
+{
+  "name": "Crowdbotics Default Codespace Config - No Copilot",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "forwardPorts": [
+    8000,
+    5432
+  ],
+  "features": {
+    "ghcr.io/nils-geistmann/devcontainers-features/zsh:0": {
+      "plugins": "git"
+    },
+    "ghcr.io/devcontainers-contrib/features/pipenv:2": {}
+  },
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      // Install VSCode extensions
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg",
+        "GitHub.copilot"
+      ],
+      // Configure VSCode settings
+      "settings": {
+        "python.linting.enabled": true,
+        "python.testing.unittestEnabled": false,
+        "python.testing.pytestEnabled": true,
+        "[python]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "ms-python.black-formatter"
+        },
+        "python.formatting.provider": "black",
+        "sqltools.connections": [
+          {
+            "name": "Container DB",
+            "driver": "PostgreSQL",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "database": "app",
+            "username": "app_user",
+            "password": "app_password"
+          }
+        ]
+      }
+    }
+  },
+  "postCreateCommand": "python3 -m pip install -r requirements-dev.txt"
+}
